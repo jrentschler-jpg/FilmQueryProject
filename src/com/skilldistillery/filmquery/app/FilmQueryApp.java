@@ -16,7 +16,7 @@ public class FilmQueryApp {
 
   public static void main(String[] args) {
     FilmQueryApp app = new FilmQueryApp();
-//    app.test();
+    app.test();
     app.launch();
   }
 
@@ -24,8 +24,8 @@ public class FilmQueryApp {
     Film film = db.findFilmById(1);
     System.out.println(film);
     
-//    Actor actor = db.findActorById(1);
-//    System.out.println(actor);
+    Actor actor = db.findActorById(1);
+    System.out.println(actor);
     
 //    List<Actor>  actors = db.findActorsByFilmId(1); 
   }
@@ -72,7 +72,7 @@ public class FilmQueryApp {
 				  System.out.println("Please try again!");
 			  }else {
 				  System.out.println(film.displayFilm());
-//				  System.out.println("\nPlease ");
+
 				  
 			  }
 			  break;

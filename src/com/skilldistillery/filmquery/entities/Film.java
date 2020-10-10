@@ -2,7 +2,7 @@ package com.skilldistillery.filmquery.entities;
 
 import java.util.List;
 
-import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
+
 
 public class Film {
 	private int filmId;
@@ -139,7 +139,6 @@ public class Film {
 		this.actors = actors;
 	}
 public String displayFilm() {
-//	DatabaseAccessorObject db = new DatabaseAccessorObject();
 	StringBuilder builder = new StringBuilder();
 	builder.append("\nTitle: ");
 	builder.append(title);
@@ -165,7 +164,6 @@ public String displayFilm() {
 }
 	@Override
 	public String toString() {
-//		DatabaseAccessorObject db = new DatabaseAccessorObject();
 		StringBuilder builder = new StringBuilder();
 		builder.append("\n");
 		builder.append("\nFilm ID:");
