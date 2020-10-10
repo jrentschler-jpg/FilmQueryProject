@@ -2,6 +2,8 @@ package com.skilldistillery.filmquery.entities;
 
 import java.util.List;
 
+import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
+
 public class Film {
 	private int filmId;
 	private String title;
@@ -19,7 +21,7 @@ public class Film {
 	
 	
 	public Film(int filmId, String title, String description, int releaseYear, int langId, int rentalDuration,
-		double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
+		double rentalRate, int length, double replacementCost, String rating, String specialFeatures, List<Actor> actors) {
 	super();
 	this.filmId = filmId;
 	this.title = title;
@@ -32,8 +34,27 @@ public class Film {
 	this.replacementCost = replacementCost;
 	this.rating = rating;
 	this.specialFeatures = specialFeatures;
+	this.actors = actors;
 }
-	
+	public Film(int filmId, String title, String description, int releaseYear, int langId, int rentalDuration,
+			double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
+		super();
+		this.filmId = filmId;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.langId = langId;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
+		this.specialFeatures = specialFeatures;
+		
+	}
+	public Film () {
+		super();
+	}
 	public int getFilmId() {
 		return filmId;
 	}
@@ -108,33 +129,46 @@ public class Film {
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
 	}
-
+public String displayFilm() {
+	DatabaseAccessorObject db = new DatabaseAccessorObject();
+	StringBuilder builder = new StringBuilder();
+	builder.append("\nTitle: ");
+	builder.append(title);
+	builder.append("\nRelease Year: ");
+	builder.append(releaseYear);
+	builder.append("\nRating: ");
+	builder.append(rating);
+	builder.append("\nDescription: ");
+	builder.append(description);
+	return builder.toString();
+}
 	@Override
 	public String toString() {
+		DatabaseAccessorObject db = new DatabaseAccessorObject();
 		StringBuilder builder = new StringBuilder();
-		builder.append("Film [filmId=");
+		builder.append("\n");
+		builder.append("\nFilm ID:");
 		builder.append(filmId);
-		builder.append(", title=");
+		builder.append("\nTitle: ");
 		builder.append(title);
-		builder.append(", description=");
+		builder.append("\nDescription: ");
 		builder.append(description);
-		builder.append(", releaseYear=");
+		builder.append("\nRelease Year: ");
 		builder.append(releaseYear);
-		builder.append(", langId=");
+		builder.append("\nLanguage: ");
 		builder.append(langId);
-		builder.append(", rentalDuration=");
+		builder.append("\nRental Duration:");
 		builder.append(rentalDuration);
-		builder.append(", rentalRate=");
+		builder.append("\nRental Rate:");
 		builder.append(rentalRate);
-		builder.append(", length=");
+		builder.append("\nLength: ");
 		builder.append(length);
-		builder.append(", replacementCost=");
+		builder.append("\nReplacement Cost: ");
 		builder.append(replacementCost);
-		builder.append(", rating=");
+		builder.append("\nRating: ");
 		builder.append(rating);
-		builder.append(", specialFeatures=");
+		builder.append("\nSpecial Features: ");
 		builder.append(specialFeatures);
-		builder.append("]");
 		return builder.toString();
 	}
 

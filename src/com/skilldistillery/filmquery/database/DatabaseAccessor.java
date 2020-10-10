@@ -9,4 +9,7 @@ public interface DatabaseAccessor {
   public Film findFilmById(int filmId);
   public Actor findActorById(int actorId);
   public List<Actor> findActorsByFilmId(int filmId);
+  public List<Film> findFilmBySearch(String keyword);
+//public Language getLanguage(int langId);
+  
 }

@@ -16,8 +16,13 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String user = "student";
 	private static final String pass = "student";
 	
-	public DatabaseAccessorObject() throws ClassNotFoundException {
-	Class.forName("com.mysql.jdbc.Driver");
+	static {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+//			System.out.println("");
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -32,7 +37,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		stmt.setInt(1, filmId);
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
-			int filId = rs.getInt("id");
+			int id = rs.getInt("id");
 			String title = rs.getString("title");
 			String description = rs.getString("description");
 			Integer releaseYear = rs.getInt("release_year");
@@ -45,7 +50,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			String specialFeatures = rs.getString("special_features");
 			
 			List<Actor> actors = findActorsByFilmId(filmId);
-			film = new Film(filmId, title, description, releaseYear, langId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures);
+			film = new Film(filmId, title, description, releaseYear, langId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, actors);
 //			actors.add(actors);
 		}
 	  rs.close();
@@ -97,7 +102,7 @@ public List<Actor> findActorsByFilmId(int filmId) {
 			int id = rs.getInt("id");
 			String firstName = rs.getString("first_name");
 			String lastName = rs.getString("last_name");
-			Actor actor = new Actor(id, firstName, lastName,films);
+			Actor actor = new Actor(id, firstName, lastName);
 			actors.add(actor);
 		}
 	rs.close();
@@ -109,5 +114,59 @@ public List<Actor> findActorsByFilmId(int filmId) {
 	
 	return actors;
 }
+//@Override
+//public Language getLanguage(int langId) {
+//	
+//}
+
+@Override
+public List<Film> findFilmBySearch(String keyword) {
+	Film film = null;
+	List<Film> films = new ArrayList<>();
+	try {
+		Connection conn = DriverManager.getConnection(URL, user, pass);
+		String sqltxt = "SELECT * FROM film WHERE description "
+				+ "LIKE ? OR title LIKE ?";
+		PreparedStatement stmt = conn.prepareStatement(sqltxt);
+		stmt.setString(1, "%" + keyword + "%");
+		stmt.setString(2, "%" + keyword + "%");
+		ResultSet rs = stmt.executeQuery();
+	
+	while(rs.next()) {
+		int filmId = rs.getInt("id");
+		String title = rs.getString("title");
+		String description = rs.getString("description");
+		Integer releaseYear = rs.getInt("release_year");
+		int langId = rs.getInt("language_id");
+		int rentalDuration = rs.getInt("rental_duration");
+		double rentalRate = rs.getDouble("rental_rate");
+		int length = rs.getInt("length");
+		double replacementCost = rs.getDouble("replacement_cost");
+		String rating = rs.getString("rating");
+		String specialFeatures = rs.getString("special_features");
+		
+		List<Actor> actors = findActorsByFilmId(filmId);
+		film = new Film(filmId, title, description, releaseYear, langId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, actors);
+		films.add(film);
+	}
+	rs.close();
+	stmt.close();
+	conn.close();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return films;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 }

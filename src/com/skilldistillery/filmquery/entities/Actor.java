@@ -17,8 +17,14 @@ public class Actor {
 		this.lastName = lastName;
 		this.films = films;
 	}
+	public Actor(int id, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 	public Actor() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	public int getId() {
 		return id;
@@ -48,15 +54,13 @@ public class Actor {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Actor [id=");
 		builder.append(id);
-		builder.append(", firstName=");
+		builder.append(" ");
 		builder.append(firstName);
-		builder.append(", lastName=");
+		builder.append(" ");
 		builder.append(lastName);
-		builder.append(", films=");
+		builder.append(" ");
 		builder.append(films);
-		builder.append("]");
 		return builder.toString();
 	} 
 	  
