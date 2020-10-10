@@ -10,6 +10,7 @@ public class Film {
 	private String description;
 	private int releaseYear;
 	private int langId;
+	private String language;
 	private int rentalDuration;
 	private double rentalRate;
 	private int length;
@@ -20,14 +21,14 @@ public class Film {
 	
 	
 	
-	public Film(int filmId, String title, String description, int releaseYear, int langId, int rentalDuration,
+	public Film(int filmId, String title, String description, int releaseYear,int langId, String language, int rentalDuration,
 		double rentalRate, int length, double replacementCost, String rating, String specialFeatures, List<Actor> actors) {
 	super();
 	this.filmId = filmId;
 	this.title = title;
 	this.description = description;
 	this.releaseYear = releaseYear;
-	this.langId = langId;
+	this.language = language;
 	this.rentalDuration = rentalDuration;
 	this.rentalRate = rentalRate;
 	this.length = length;
@@ -36,14 +37,14 @@ public class Film {
 	this.specialFeatures = specialFeatures;
 	this.actors = actors;
 }
-	public Film(int filmId, String title, String description, int releaseYear, int langId, int rentalDuration,
+	public Film(int filmId, String title, String description, int releaseYear, String language, int rentalDuration,
 			double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
 		super();
 		this.filmId = filmId;
 		this.title = title;
 		this.description = description;
 		this.releaseYear = releaseYear;
-		this.langId = langId;
+		this.language = language;
 		this.rentalDuration = rentalDuration;
 		this.rentalRate = rentalRate;
 		this.length = length;
@@ -79,6 +80,14 @@ public class Film {
 	public void setReleaseYear(int releaseYear) {
 		this.releaseYear = releaseYear;
 	}
+	
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	
 	public int getLangId() {
 		return langId;
 	}
@@ -130,7 +139,7 @@ public class Film {
 		this.actors = actors;
 	}
 public String displayFilm() {
-	DatabaseAccessorObject db = new DatabaseAccessorObject();
+//	DatabaseAccessorObject db = new DatabaseAccessorObject();
 	StringBuilder builder = new StringBuilder();
 	builder.append("\nTitle: ");
 	builder.append(title);
@@ -140,11 +149,23 @@ public String displayFilm() {
 	builder.append(rating);
 	builder.append("\nDescription: ");
 	builder.append(description);
+	builder.append("\nLanguage: ");
+	builder.append(language);
+	builder.append("\nActor's List: ");
+	builder.append(actors);
+	for (int i = 0; i < actors.size(); i++) {
+		builder.append(actors.get(i));
+		if(i < actors.size() ) {
+			builder.append(", ");
+		}
+		
+	}
+	
 	return builder.toString();
 }
 	@Override
 	public String toString() {
-		DatabaseAccessorObject db = new DatabaseAccessorObject();
+//		DatabaseAccessorObject db = new DatabaseAccessorObject();
 		StringBuilder builder = new StringBuilder();
 		builder.append("\n");
 		builder.append("\nFilm ID:");
@@ -156,7 +177,7 @@ public String displayFilm() {
 		builder.append("\nRelease Year: ");
 		builder.append(releaseYear);
 		builder.append("\nLanguage: ");
-		builder.append(langId);
+		builder.append(language);
 		builder.append("\nRental Duration:");
 		builder.append(rentalDuration);
 		builder.append("\nRental Rate:");
@@ -169,16 +190,26 @@ public String displayFilm() {
 		builder.append(rating);
 		builder.append("\nSpecial Features: ");
 		builder.append(specialFeatures);
+		builder.append("\nActor's List: ");
+		builder.append(actors);
+		
+		for (int i = 0; i < actors.size(); i++) {
+			builder.append(actors.get(i));
+			if(i < actors.size() -1) {
+				builder.append(", ");
+			}
+			
+		}
 		return builder.toString();
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + filmId;
-		result = prime * result + langId;
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + length;
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
 		result = prime * result + releaseYear;
@@ -192,7 +223,6 @@ public String displayFilm() {
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -202,6 +232,11 @@ public String displayFilm() {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
+		if (actors == null) {
+			if (other.actors != null)
+				return false;
+		} else if (!actors.equals(other.actors))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -209,7 +244,10 @@ public String displayFilm() {
 			return false;
 		if (filmId != other.filmId)
 			return false;
-		if (langId != other.langId)
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
 			return false;
 		if (length != other.length)
 			return false;
@@ -238,6 +276,8 @@ public String displayFilm() {
 			return false;
 		return true;
 	}
+
+
 	
 
 }

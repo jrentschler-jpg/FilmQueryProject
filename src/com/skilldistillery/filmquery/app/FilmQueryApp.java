@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
 import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
+import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class FilmQueryApp {
@@ -22,6 +23,11 @@ public class FilmQueryApp {
   private void test() {
     Film film = db.findFilmById(1);
     System.out.println(film);
+    
+//    Actor actor = db.findActorById(1);
+//    System.out.println(actor);
+    
+//    List<Actor>  actors = db.findActorsByFilmId(1); 
   }
 
   private void launch() {
@@ -35,6 +41,7 @@ public class FilmQueryApp {
   private void startUserInterface(Scanner input) {
 	  List<Film> films = new ArrayList<>();
 	  boolean menu = true;
+	  
 	  Film film;
 	  System.out.println("Introducing: The Film Query Database");
 	  while(menu) {
@@ -49,9 +56,13 @@ public class FilmQueryApp {
 			  select = input.nextInt();
 			  
 		  } catch (InputMismatchException e) {
-			  System.out.println("Input not valid! Please enter 1-3.");
-			  break;
+			  String badInput = input.next();
+			  System.out.println("You entered an Invalid input of: "+ badInput+  ". \nPlease enter 1-3.");
+//			  select = input.nextInt();
+			  continue;
+//			  break;
 		  }
+
 		  switch (select) {
 		  case 1:
 			  System.out.println("Please enter the film id number: ");
@@ -61,6 +72,7 @@ public class FilmQueryApp {
 				  System.out.println("Please try again!");
 			  }else {
 				  System.out.println(film.displayFilm());
+//				  System.out.println("\nPlease ");
 				  
 			  }
 			  break;
@@ -73,7 +85,6 @@ public class FilmQueryApp {
 			  }else {
 				  for (Film film2 : films) {
 					  System.out.println(film2.displayFilm());
-					
 				}
 			  }
 			  break;
